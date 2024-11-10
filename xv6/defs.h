@@ -124,6 +124,7 @@ void            yield(void);
 void            record_syscall(int);
 int             get_process_by_pid(int, struct proc**);
 int             list_all_processes(void);
+void            find_palindrome(int);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

@@ -215,3 +215,9 @@ int sys_get_most_invoked_syscall(void){
 int sys_list_all_processes(void){
     return list_all_processes();
 }
+
+void sys_find_palindrome(void){
+  int num = myproc()->tf->ebx;
+  cprintf("KERNEL: sys_find_palindrome(%d)\n" , num);
+  find_palindrome(num);
+}

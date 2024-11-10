@@ -29,6 +29,7 @@ int get_process_by_pid(int, struct proc**);
 int get_most_invoked_syscall(int);
 int list_all_processes(void);
 int move_file(const char *src_file, const char *dest_dir);
+void find_palindrome(int);
 
 
 // ulib.c
