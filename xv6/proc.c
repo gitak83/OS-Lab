@@ -588,4 +588,14 @@ int list_all_processes(void) {
     release(&ptable.lock); // Release the lock after done
     return 0; // Indicate success
 }
-
+void find_palindrome(int num)
+{
+  int reversed = 0;
+  int temp = num;
+  while (num > 0)
+  {
+    reversed = reversed * 10 + num % 10;
+    num /= 10;
+  }
+  cprintf("Palindrome formed: %d%d\n",temp, reversed);
+}
