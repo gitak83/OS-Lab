@@ -221,3 +221,30 @@ void sys_find_palindrome(void){
   cprintf("KERNEL: sys_find_palindrome(%d)\n" , num);
   find_palindrome(num);
 }
+
+void sys_show_process_info(void) {
+  show_process_info();
+}
+
+int
+sys_change_sched_Q(void)
+{
+  //cprintf("one\n");
+  int queue_number, pid;
+  if(argint(0, &pid) < 0 || argint(1, &queue_number) < 0)
+    return -1;
+
+  if(queue_number < ROUND_ROBIN || queue_number > SJF)
+    return -1;
+
+  return change_Q(pid, queue_number);
+}
+
+/*int
+sys_set_proc_sjf_params(void)
+{
+  int pid;
+  int burst; 
+  int con;
+  return set_proc_sjf_params(pid, burst, con);
+}*/

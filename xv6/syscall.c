@@ -108,6 +108,10 @@ extern int sys_sort_syscalls(void);
 extern int sys_get_most_invoked_syscall(void);
 extern int sys_list_all_processes(void);
 extern int sys_find_palindrome(void);
+extern int sys_show_process_info(void);
+extern int sys_change_sched_Q(void);
+extern int sys_set_proc_sjf_params(void);
+
 
 
 static int (*syscalls[])(void) = {
@@ -136,8 +140,10 @@ static int (*syscalls[])(void) = {
 [SYS_sort_syscalls]  sys_sort_syscalls,
 [SYS_get_most_invoked_syscall] sys_get_most_invoked_syscall,
 [SYS_list_all_processes] sys_list_all_processes,
-[SYS_find_palindrome] sys_find_palindrome
-
+[SYS_find_palindrome] sys_find_palindrome,
+[SYS_show_process_info] sys_show_process_info,
+[SYS_change_sched_Q] sys_change_sched_Q,
+//[SYS_set_proc_sjf_params] sys_set_proc_sjf_params,
 };
 
 void

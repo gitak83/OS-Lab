@@ -8,6 +8,8 @@
 #include "traps.h"
 #include "spinlock.h"
 
+uint start_ticks=0;
+uint last_ticks=0 ; 
 // Interrupt descriptor table (shared by all CPUs).
 struct gatedesc idt[256];
 extern uint vectors[];  // in vectors.S: array of 256 entry pointers
@@ -36,6 +38,7 @@ idtinit(void)
 void
 trap(struct trapframe *tf)
 {
+
   if(tf->trapno == T_SYSCALL){
     if(myproc()->killed)
       exit();
@@ -50,7 +53,15 @@ trap(struct trapframe *tf)
   case T_IRQ0 + IRQ_TIMER:
     if(cpuid() == 0){
       acquire(&tickslock);
-      ticks++;
+      ticks++; 
+      if (ticks - start_ticks >= 100)
+      {
+        //uint ticks_per_sec;
+        //ticks_per_sec= ticks - last_ticks;
+        last_ticks = ticks;
+        start_ticks = ticks;
+        //cprintf("timer:%d""\n",ticks_per_sec);
+      }
       wakeup(&ticks);
       release(&tickslock);
     }

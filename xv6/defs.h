@@ -125,6 +125,10 @@ void            record_syscall(int);
 int             get_process_by_pid(int, struct proc**);
 int             list_all_processes(void);
 void            find_palindrome(int);
+void			show_process_info(void);
+int				change_Q(int, int);
+void            age_change(int);
+//int             set_proc_sjf_params(int, int, int);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

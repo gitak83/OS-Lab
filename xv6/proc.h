@@ -36,6 +36,7 @@ struct context {
 };
 
 enum procstate { UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
+enum schedqueue {UNSET, ROUND_ROBIN, FCFS, SJF};
 
 struct syscall_entry {
     int syscall_number; //id of the syscall
@@ -59,6 +60,12 @@ struct proc {
   char name[16];               // Process name (debugging)
   struct syscall_entry syscalls[MAX_SYSCALLS];
   int syscall_count;
+  int burst_time;
+  int confidence;
+  enum schedqueue queue;
+  int arrival;
+  int last_run;
+  int wait_time;
 };
 
 
