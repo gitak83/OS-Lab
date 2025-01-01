@@ -111,6 +111,13 @@ extern int sys_find_palindrome(void);
 extern int sys_show_process_info(void);
 extern int sys_change_sched_Q(void);
 extern int sys_set_proc_sjf_params(void);
+///////////////////////////
+extern int sys_getcount(void);
+extern int sys_initreentrantlock(void);
+extern int sys_acquirereentrantlock(void);
+extern int sys_releasereentrantlock(void);
+
+
 
 
 
@@ -143,6 +150,15 @@ static int (*syscalls[])(void) = {
 [SYS_find_palindrome] sys_find_palindrome,
 [SYS_show_process_info] sys_show_process_info,
 [SYS_change_sched_Q] sys_change_sched_Q,
+ ///////////////////////////////////////////////////
+[SYS_getcount] sys_getcount,
+// [SYS_count] syscallcount,
+// [SYS_resetcount] resetcount,
+[SYS_initreentrantlock] sys_initreentrantlock,
+[SYS_acquirereentrantlock] sys_acquirereentrantlock,
+[SYS_releasereentrantlock] sys_releasereentrantlock,
+
+
 //[SYS_set_proc_sjf_params] sys_set_proc_sjf_params,
 };
 
@@ -160,4 +176,25 @@ syscall(void)
             curproc->pid, curproc->name, num);
     curproc->tf->eax = -1;
   }
+//   struct proc *currentproc = myproc();
+//   int num_=currentproc->tf->eax;
+//   int weight=1;
+//   switch (num_)
+//   {
+//   case SYS_open:
+//     weight=3;
+//     break;
+//   case SYS_write:
+//     weight=2;
+//     break;
+  
+//   default:
+//     break;
+//   }
+//   //acquire(&syscalllock);
+//   num_all_syscall+=weight;
+//  // release(&syscalllock);
+//   pushcli();
+//   mycpu()->num_syscall += weight;
+//   popcli();
 }

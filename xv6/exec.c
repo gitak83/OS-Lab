@@ -10,6 +10,13 @@
 int
 exec(char *path, char **argv)
 {
+  pushcli();
+  for(int i=0;i<ncpu;i++)
+  {
+    cpus[i].num_syscall=0;
+  }
+  num_all_syscall=0;
+  popcli();
   char *s, *last;
   int i, off;
   uint argc, sz, sp, ustack[3+MAXARG+1];

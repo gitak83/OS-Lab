@@ -7,6 +7,8 @@
 #include "mmu.h"
 #include "proc.h"
 #include "syscall.h"
+#include "traps.h"
+#include "spinlock.h"
 
 char map[26][30] = {
   "fork", 
@@ -239,7 +241,39 @@ sys_change_sched_Q(void)
 
   return change_Q(pid, queue_number);
 }
+//////syscallcount,resetsyscallcount
 
+int syscallcount(int cpu)
+{
+  //cprintf("%d\n", ncpu);
+  if ( cpu<0 || cpu>=ncpu)
+    return -1;
+  return cpus[cpu].num_syscall;
+}
+int sys_getcount(void)
+{
+  int i,total=0;
+  for(i=0;i<ncpu ; i++)
+  {
+    int count=syscallcount(i);
+    if(count>=0)
+    {
+      cprintf("system call count with %d-th core!!!:%d\n",i,count);
+      total+=count;
+    }
+  }
+  cprintf("total syscall:%d\n",total);
+  cprintf("shared syscall : %d\n" , num_all_syscall);
+  return total;
+}
+int resetcount(int cpu)
+{
+  if(cpu < 0 || cpu>=ncpu)
+    return -1;
+  cpus[cpu].num_syscall = 0;
+
+  return 0;
+}
 /*int
 sys_set_proc_sjf_params(void)
 {
@@ -248,3 +282,41 @@ sys_set_proc_sjf_params(void)
   int con;
   return set_proc_sjf_params(pid, burst, con);
 }*/
+
+int sys_initreentrantlock(struct reetrantlock *rlk, char *name) {
+    return 0;
+    initlock(&rlk->lock, name); 
+    rlk->owner = 0;             
+    rlk->recursion = 0;        
+    return 0;
+}
+
+int sys_acquirereentrantlock(struct reetrantlock *rlk){
+    return 0;
+    pushcli();  
+    if (rlk->owner == myproc()) {  
+        rlk->recursion++;              
+        popcli();                 
+        return 0;
+    }
+    acquire(&rlk->lock);  
+    rlk->owner = myproc(); 
+    rlk->recursion = 1;        
+    popcli(); 
+    return 0;
+}
+
+int sys_releasereentrantlock(struct reetrantlock *rlk){
+    return 0;
+    pushcli();  
+    if (rlk->owner != myproc()) {
+        panic("releasereentrantlock: not owner");
+    }
+    rlk->recursion--;  
+    if (rlk->recursion == 0) {  
+        rlk->owner = 0;     
+        release(&rlk->lock); 
+    }
+    popcli();
+    return 0;
+}

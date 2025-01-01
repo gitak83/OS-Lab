@@ -9,3 +9,8 @@ struct spinlock {
                      // that locked the lock.
 };
 
+struct reetrantlock{
+  struct spinlock lock;
+  struct proc *owner;
+  int recursion;
+};

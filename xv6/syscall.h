@@ -27,3 +27,7 @@
 #define SYS_list_all_processes 26
 #define SYS_show_process_info 27
 #define SYS_change_sched_Q 28
+#define SYS_getcount 29
+#define SYS_initreentrantlock 30
+#define SYS_acquirereentrantlock 31
+#define SYS_releasereentrantlock 32

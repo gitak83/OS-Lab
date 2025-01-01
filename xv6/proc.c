@@ -15,7 +15,7 @@ struct
 } ptable;
 
 static struct proc *initproc;
-
+int num_all_syscall;
 int nextpid = 1;
 extern void forkret(void);
 extern void trapret(void);
@@ -914,7 +914,7 @@ int change_Q(int pid, int new_queue)
 {
   struct proc *p;
   int old_queue = -1;
-  cprintf("%d\n", new_queue);
+  //cprintf("%d\n", new_queue);
 
   if (new_queue == UNSET)
   {
@@ -940,7 +940,7 @@ int change_Q(int pid, int new_queue)
       old_queue = p->queue;
       p->queue = new_queue;
 
-      cprintf("new queuwe is %d\n", p->queue);
+      //cprintf("new queuwe is %d\n", p->queue);
       p->arrival = ticks;
       // acquire(&ptable.lock);
       break;

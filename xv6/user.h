@@ -1,6 +1,7 @@
 struct stat;
 struct rtcdate;
 struct proc;
+struct reetrantlock;
 
 // system calls
 int fork(void);
@@ -33,6 +34,11 @@ void find_palindrome(int);
 void show_process_info(void);
 int change_sched_Q(int , int);
 //int set_proc_sjf_params(int, int, int);
+int getcount(void);
+int initreentrantlock(struct reetrantlock *rlk, char *name);
+int acquirereentrantlock(struct reetrantlock *rlk);
+int releasereentrantlock(struct reetrantlock *rlk) ;
+
 
 
 
